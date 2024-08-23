@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ServiceOrderManager.Data;
+using ServiceOrderManager.Services.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// 6. Metodos da interface dentro do serviço
+builder.Services.AddScoped<IClientInterface, ClientService>();
 
 var app = builder.Build();
 
