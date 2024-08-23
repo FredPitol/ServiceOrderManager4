@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ServiceOrderManager.Models;
 using System.Diagnostics.Contracts;
 
 namespace ServiceOrderManager.Data
@@ -11,5 +12,7 @@ namespace ServiceOrderManager.Data
 
         }
 
+        //5. Criando tabela do BD
+        public DbSet<Client> Clients { get; set; }
     }
 }
