@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Client>
+
+ <div class="py-5" >
+    <div class="container">
+        <div class="text-center mb-5">
+            <a class="btn btn-success" asp-action="Cadastrar" asp-controller="Client">Cadastrar novo cliente</a> 
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-0 ">
+
+            @if (Model != null)
+            {
+                @if (Model.Count() > 0)
+                {
+                    @foreach (var client in Model)
+                    {
+                        <div class="card mx-3 my-3 p-2" style="width: 12rem">
+
+                            @if(client.Logo != null)
+                            {
+                                <img src="/image/@client.Logo" class="card-img-top" style="width: 175px; height: 150px" />
+                            }
+                            else
+                            {
+                                <img src="..." class="card-img-top" />
+                            }
+
+                            <div class="card-body">
+                                <h5 class="card-title">@client.Name</h5>
+                            </div>
+
+                            <div class="card-body">
+                                <a class="btn btn-warning w-100" asp-action="Edit" asp-controller="Client" asp-route-id="@client.ID"></a>
+                                <a class="btn btn-danger w-100" asp-action="Remove" asp-controller="Client" asp-route-id="@client.ID" ></a>
+                            </div>
+
+                        </div>
+                    }
+                }
+            }
+
+        </div>
+     
+</div>
+ 
+</div>

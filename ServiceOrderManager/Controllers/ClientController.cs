@@ -2,11 +2,13 @@
 
 namespace ServiceOrderManager.Controllers
 {
-    public class ClientController1 : Controller
+    // Perdi 1hora procurando esse 1 -_-
+    public class ClientController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
+        public
     }
 }
