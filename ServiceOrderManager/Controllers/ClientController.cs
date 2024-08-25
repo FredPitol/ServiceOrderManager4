@@ -9,6 +9,9 @@ namespace ServiceOrderManager.Controllers
         {
             return View();
         }
-        public
+        public IActionResult Enroll()
+        {
+            return View();
+        }
     }
 }
