@@ -29,8 +29,9 @@ namespace ServiceOrderManager.Services.Client
         public string CreateFilePath(IFormFile photo)
         {
             var uniqueId = Guid.NewGuid().ToString();   // Cria idunico  
-            var imagePathName = photo.FileName.Replace(" ", "").ToLower() + uniqueId + ".png";   // Monta image path 
-            
+      
+            var imagePathName = photo.FileName.Replace(" ", "").ToLower() + uniqueId + ".png";  // Monta image path
+                                                                                                // 
             var pathToSavePhoto = _system + "\\imagem\\";    // Cria path para armazenar foto no wwroot (_system)
 
             // Cria diretório caso não exista 
@@ -77,6 +78,24 @@ namespace ServiceOrderManager.Services.Client
             {
                 throw new Exception(ex.Message);
             }
+        }
+        // 10.2 Listando todos clientes
+        public async Task<List<ClientModel>> GetClients()
+        {
+            try
+            {   //10. Entra no banco e cria lista, possibilitando que o controller index acesse 
+                return await _context.Clients.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
+        }
+
+        public Task<ClientModel> GetClientById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,17 +8,20 @@ namespace ServiceOrderManager.Controllers
     {
         private readonly IClientInterface _clientInterface;
 
-        //Construtor 
         //9.5 <- Injeção de dependencia 
         public ClientController(IClientInterface clientInterface)
         {
             _clientInterface = clientInterface;
         }
-            
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            //10.3 index Recebe lista de clientes
+            var clients = await _clientInterface.GetClients();
+            return View(clients); //Retorna lista de clientes
         }
+
+
 
         public IActionResult Enroll()
         {
