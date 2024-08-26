@@ -8,8 +8,8 @@ namespace ServiceOrderManager.Controllers
     {
         private readonly IClientInterface _clientInterface;
 
-        //Construtor - Injeção de dependencia - 
-
+        //Construtor 
+        //9.5 <- Injeção de dependencia 
         public ClientController(IClientInterface clientInterface)
         {
             _clientInterface = clientInterface;
@@ -35,8 +35,10 @@ namespace ServiceOrderManager.Controllers
             if (ModelState.IsValid) // Info validas ?
             {   
                 // Precisamos criar os métodos na interface - Controllers ->  Interface (Métodos mapeados dentro do service), possibilita o acesso 
+                // 9.4 <- Precisamos entrar na interface ->
+                // 9.6 Passamos o dto e a foto 
                 var client = await _clientInterface.CreateClient(dtoClientCreator, photo);// Método criado na interface <-
-                return RedirectToAction("Index", "Client");
+                return RedirectToAction("Index", "Client"); //Redireciona para action Index no controller client 
             }
             else // Devolvemos a view preenchida
             {

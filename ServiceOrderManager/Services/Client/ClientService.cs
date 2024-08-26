@@ -10,10 +10,12 @@ namespace ServiceOrderManager.Services.Client
     public class ClientService : IClientInterface
     {
         // 9. Implementação do método
+
         private readonly AppDbContext _context;
         private readonly string _system;
 
         // 9. Construtor - Injeção de dependencia
+
         public ClientService(AppDbContext context, IWebHostEnvironment system)
         {
             // 9. Acesso ao banco 
@@ -21,45 +23,52 @@ namespace ServiceOrderManager.Services.Client
             _system = system.WebRootPath;
        
         }
-        public string CreateImagePath(IFormFile photo)
+
+        // Gera caminho 
+
+        public string CreateFilePath(IFormFile photo)
         {
-            var uniqueId = Guid.NewGuid().ToString();
-            var ImagePathName = photo.FileName.Replace(" ", "").ToLower() + uniqueId + ".png";
-            var pathToSavePhoto = _system + "\\image\\";
+            var uniqueId = Guid.NewGuid().ToString();   // Cria idunico  
+            var imagePathName = photo.FileName.Replace(" ", "").ToLower() + uniqueId + ".png";   // Monta image path 
+            
+            var pathToSavePhoto = _system + "\\imagem\\";    // Cria path para armazenar foto no wwroot (_system)
 
             // Cria diretório caso não exista 
-            if (!Directory.Exists(pathToSavePhoto))
+            if (!Directory.Exists(pathToSavePhoto)) // Se existe troca pra f para não entrar 
             {
                 Directory.CreateDirectory(pathToSavePhoto);
             }
 
-            using (var stream = File.Create(pathToSavePhoto + ImagePathName))
+            // 9.1 Criando foto dentro do caminho de imagem 
+            using (var stream = File.Create(pathToSavePhoto + imagePathName))
             {
                 //9. Cria copia da foto nesse caminho de imagem
-                photo.CopyToAsync(stream).Wait();
+                photo.CopyToAsync(stream).Wait(); 
             }
 
-            return pathToSavePhoto;
+            return imagePathName;
 
         }
-        //9. Criado implementando a interface (auto)
-        public async Task<ClientModel> CreateClient(DtoClientCreator dtoClientCreated, IFormFile photo)
+        //9.2 Temos a pasta criada e o nome da imagem que foi criada que vamos adicionar na propriedade a seguir 
+        //9. Criado implementando a interface 
+        public async Task<ClientModel> CreateClient(DtoClientCreator dtoClientCreator, IFormFile photo)
         {
             try
             {
-                var nameImagePath = CreateImagePath(photo);
+                var imagePathName = CreateFilePath(photo); 
 
                 var client = new ClientModel
                 {
-                    Name = dtoClientCreated.Name,
-                    Email = dtoClientCreated.Email,
-                    Address = dtoClientCreated.Address,
-                    Cnpj = dtoClientCreated.Cnpj,
-                    Logo = nameImagePath
+                    Name = dtoClientCreator.Name,
+                    Email = dtoClientCreator.Email,
+                    Address = dtoClientCreator.Address,
+                    Cnpj = dtoClientCreator.Cnpj,
+                    Logo = imagePathName
                 };
-                // Atualizando bd
+
+                // 9.3 Atualizando bd com o objeto criado 
                 _context.Add(client);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); // 9.4 Espera que o processo de salvar no banco seja feito , agora podemos ir para ClientControoller -> 
 
                 return client;
 
