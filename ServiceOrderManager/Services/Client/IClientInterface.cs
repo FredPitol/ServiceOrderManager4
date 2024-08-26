@@ -2,12 +2,9 @@
 using ServiceOrderManager.Models;
 
 namespace ServiceOrderManager.Services.Client
-
-
 {
-    public interface IClientInterface
+    public interface IClientInterface 
     {
-        Task<ClientModel> CreateClient(DtoClientCreator dtoClientCreated, IFormFile photo);
-
+        Task<ClientModel> CreateClient(DtoClientCreator dtoClientCreator, IFormFile photo); // Criação de metodo 
     }
 }

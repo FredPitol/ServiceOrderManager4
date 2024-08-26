@@ -2,6 +2,8 @@
 using ServiceOrderManager.Dto;
 using ServiceOrderManager.Models;
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
+// Imports ok 
 
 namespace ServiceOrderManager.Services.Client
 {
@@ -10,9 +12,11 @@ namespace ServiceOrderManager.Services.Client
         // 9. Implementação do método
         private readonly AppDbContext _context;
         private readonly string _system;
-        // 9. Construtor
+
+        // 9. Construtor - Injeção de dependencia
         public ClientService(AppDbContext context, IWebHostEnvironment system)
         {
+            // 9. Acesso ao banco 
             _context = context;
             _system = system.WebRootPath;
        
@@ -57,13 +61,13 @@ namespace ServiceOrderManager.Services.Client
                 _context.Add(client);
                 await _context.SaveChangesAsync();
 
-                return client;  
-                    
+                return client;
+
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }               
+            }
         }
     }
 }
