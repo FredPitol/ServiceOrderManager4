@@ -1,6 +1,6 @@
 ﻿namespace ServiceOrderManager.Models
 {
-    public class Client
+    public class ClientModel
     {
         public int ID { get; set; }
         public string Cnpj { get; set; } = string.Empty;

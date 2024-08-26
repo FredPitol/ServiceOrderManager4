@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServiceOrderManager.Dto;
 
 namespace ServiceOrderManager.Controllers
 {
-    // Perdi 1hora procurando esse 1 -_-
+
     public class ClientController : Controller
     {
+        
         public IActionResult Index()
         {
             return View();
@@ -12,6 +14,20 @@ namespace ServiceOrderManager.Controllers
         public IActionResult Enroll()
         {
             return View();
+        }
+
+        // 9. Criando método post
+        [HttpPost]
+        public async Task<IActionResult> Enroll(DtoClientCreator dtoClientCreator, IFormFile photo)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            else
+            {
+                return View(dtoClientCreator);
+            }
         }
     }
 }
