@@ -9,6 +9,6 @@ namespace ServiceOrderManager.Services.Client
 
         Task<List<ClientModel>> GetClients(); // 10.1 lista Todos os clientesz
         Task<ClientModel> GetClientById(int id); // 10.1 Retorna cliente especifico via ID
-
+        Task<ClientModel> EditClient(ClientModel client, IFormFile? photo); 
     }
 }

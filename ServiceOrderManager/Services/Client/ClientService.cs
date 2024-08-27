@@ -9,27 +9,22 @@ namespace ServiceOrderManager.Services.Client
 {
     public class ClientService : IClientInterface
     {
-        // 9. Implementação do método
-
         private readonly AppDbContext _context;
-        private readonly string _system;
 
-        // 9. Construtor - Injeção de dependencia
+        private readonly string _system;
 
         public ClientService(AppDbContext context, IWebHostEnvironment system)
         {
             // 9. Acesso ao banco 
             _context = context;
             _system = system.WebRootPath;
-       
-        }
 
-        // Gera caminho 
+        }
 
         public string CreateFilePath(IFormFile photo)
         {
             var uniqueId = Guid.NewGuid().ToString();   // Cria idunico  
-      
+
             var imagePathName = photo.FileName.Replace(" ", "").ToLower() + uniqueId + ".png";  // Monta image path
                                                                                                 // 
             var pathToSavePhoto = _system + "\\imagem\\";    // Cria path para armazenar foto no wwroot (_system)
@@ -44,19 +39,18 @@ namespace ServiceOrderManager.Services.Client
             using (var stream = File.Create(pathToSavePhoto + imagePathName))
             {
                 //9. Cria copia da foto nesse caminho de imagem
-                photo.CopyToAsync(stream).Wait(); 
+                photo.CopyToAsync(stream).Wait();
             }
 
             return imagePathName;
 
         }
-        //9.2 Temos a pasta criada e o nome da imagem que foi criada que vamos adicionar na propriedade a seguir 
-        //9. Criado implementando a interface 
+
         public async Task<ClientModel> CreateClient(DtoClientCreator dtoClientCreator, IFormFile photo)
         {
             try
             {
-                var imagePathName = CreateFilePath(photo); 
+                var imagePathName = CreateFilePath(photo);
 
                 var client = new ClientModel
                 {
@@ -79,7 +73,7 @@ namespace ServiceOrderManager.Services.Client
                 throw new Exception(ex.Message);
             }
         }
-        // 10.2 Listando todos clientes
+
         public async Task<List<ClientModel>> GetClients()
         {
             try
@@ -90,12 +84,67 @@ namespace ServiceOrderManager.Services.Client
             {
                 throw new Exception(ex.Message);
             }
-            
+
         }
 
-        public Task<ClientModel> GetClientById(int id)
+        public async Task<ClientModel> GetClientById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {   // 11. =>
+                return await _context.Clients.FirstOrDefaultAsync(client => client.ID == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<ClientModel> EditClient(ClientModel client, IFormFile? photo)
+        {
+            try
+            {
+                var clientFromDataBase = await _context.Clients.AsNoTracking().SingleOrDefaultAsync(clientBD => clientBD.ID == client.ID); // 11.2  
+
+                //11.3
+
+                var imagePathName = "";
+
+                if (photo != null)
+                {
+                    string existingLogoPath = _system + "\\image\\" + clientFromDataBase.Logo;
+                    if (File.Exists(existingLogoPath))
+                    {
+                        File.Delete(existingLogoPath);
+                    }
+
+                    imagePathName = CreateFilePath(photo);
+                }
+
+                clientFromDataBase.Address = client.Address;
+                clientFromDataBase.Cnpj = client.Cnpj;
+                clientFromDataBase.Email = client.Email;
+                clientFromDataBase.Name = client.Name;
+                //11.3 
+                if (imagePathName != "")
+                {
+                    clientFromDataBase.Logo = imagePathName;
+                }
+                else
+                {
+                    clientFromDataBase.Logo = client.Logo;
+                }
+
+                //11.4
+                _context.Update(clientFromDataBase);
+                await _context.SaveChangesAsync();
+
+                return client;
+
+            }
+            catch (Exception ex)
+            { 
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

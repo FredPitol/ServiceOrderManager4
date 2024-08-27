@@ -17,7 +17,7 @@
 
                             @if(client.Logo != null)
                             {
-                                <img src="/image/@client.Logo" class="card-img-top" style="width: 175px; height: 150px" />
+                                <img src="/imagem/@client.Logo" class="card-img-top" style="width: 175px; height: 150px" />
                             }
                             else
                             {
@@ -29,8 +29,8 @@
                             </div>
 
                             <div class="card-body">
-                                <a class="btn btn-warning w-100" asp-action="Edit" asp-controller="Client" asp-route-id="@client.ID"></a>
-                                <a class="btn btn-danger w-100" asp-action="Remove" asp-controller="Client" asp-route-id="@client.ID" ></a>
+                                <a class="btn btn-warning w-100" asp-action="Edit" asp-controller="Client" asp-route-id="@client.ID">Editar </a>
+                                <a class="btn btn-danger w-100" asp-action="Remove" asp-controller="Client" asp-route-id="@client.ID">Remover </a>
                             </div>
 
                         </div>

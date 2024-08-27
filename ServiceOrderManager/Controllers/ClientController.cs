@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceOrderManager.Dto;
+using ServiceOrderManager.Models;
 using ServiceOrderManager.Services.Client;
 
 namespace ServiceOrderManager.Controllers
@@ -8,7 +9,7 @@ namespace ServiceOrderManager.Controllers
     {
         private readonly IClientInterface _clientInterface;
 
-        //9.5 <- Injeção de dependencia 
+        //9.5 
         public ClientController(IClientInterface clientInterface)
         {
             _clientInterface = clientInterface;
@@ -16,18 +17,23 @@ namespace ServiceOrderManager.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //10.3 index Recebe lista de clientes
+            //10.3
             var clients = await _clientInterface.GetClients();
-            return View(clients); //Retorna lista de clientes
+            return View(clients); 
         }
-
-
 
         public IActionResult Enroll()
         {
             return View();
         }
 
+        // 11.1 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var client = await _clientInterface.GetClientById(id);
+
+            return View(client);
+        }
 
         // 9. Criando método post
         
@@ -37,16 +43,30 @@ namespace ServiceOrderManager.Controllers
         {
             if (ModelState.IsValid) // Info validas ?
             {   
-                // Precisamos criar os métodos na interface - Controllers ->  Interface (Métodos mapeados dentro do service), possibilita o acesso 
-                // 9.4 <- Precisamos entrar na interface ->
-                // 9.6 Passamos o dto e a foto 
-                var client = await _clientInterface.CreateClient(dtoClientCreator, photo);// Método criado na interface <-
-                return RedirectToAction("Index", "Client"); //Redireciona para action Index no controller client 
+                var client = await _clientInterface.CreateClient(dtoClientCreator, photo);
+                return RedirectToAction("Index", "Client"); 
             }
-            else // Devolvemos a view preenchida
+            else
             {
                 return View(dtoClientCreator);
             }
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ClientModel clientModel,IFormFile? photo )
+        {
+            if(ModelState.IsValid)
+            {
+                var client = await _clientInterface.EditClient(clientModel, photo);
+                return RedirectToAction("Index", "Client");
+            }
+            else
+            {
+                return View(clientModel);
+            }
+
         }
     }
 }
