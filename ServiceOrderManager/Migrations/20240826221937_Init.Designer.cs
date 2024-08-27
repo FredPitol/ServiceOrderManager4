@@ -11,8 +11,8 @@ using ServiceOrderManager.Data;
 namespace ServiceOrderManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240826191915_AddLogo")]
-    partial class AddLogo
+    [Migration("20240826221937_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
