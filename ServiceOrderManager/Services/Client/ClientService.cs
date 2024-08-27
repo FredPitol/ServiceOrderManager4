@@ -146,5 +146,22 @@ namespace ServiceOrderManager.Services.Client
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<ClientModel> RemoveClient(int id)
+        {
+            try
+            {
+                var client = await _context.Clients.FirstOrDefaultAsync(clientFromDataBase => clientFromDataBase.ID == id);
+
+                _context.Remove(client);
+                await _context.SaveChangesAsync();
+
+                return client;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

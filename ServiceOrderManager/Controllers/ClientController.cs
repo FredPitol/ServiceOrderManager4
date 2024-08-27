@@ -35,7 +35,14 @@ namespace ServiceOrderManager.Controllers
             return View(client);
         }
 
-        // 9. Criando método post
+
+        //12. 
+        public async Task<IActionResult> Remove(int id)
+        {
+            var client = await _clientInterface.RemoveClient(id);
+            return RedirectToAction("Index", "Client");
+        }
+
         
         [HttpPost]
 
