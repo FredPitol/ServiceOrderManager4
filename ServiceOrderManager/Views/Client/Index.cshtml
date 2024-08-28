@@ -2,6 +2,14 @@
 
  <div class="py-5" >
     <div class="container">
+
+        <div class="text-center mb-5">
+            <form method="get" asp-action="Index" asp-controller="Client" class="d-flex justify-content-center">
+                <input name="pesquisar" class="form-control w-50 mx-2" style="border:1px solid black;" />
+                <button type="submit" class="btn btn-primary w-10">Pesquisar</button>
+            </form>
+        </div>
+
         <div class="text-center mb-5">
             <a class="btn btn-success" asp-action="Enroll" asp-controller="Client">Cadastrar novo cliente</a> 
         </div>
@@ -26,6 +34,11 @@
 
                             <div class="card-body">
                                 <h5 class="card-title">@client.Name</h5>
+                                <p class="card-title">@client.Cnpj</p>
+                                <p class="card-title">@client.Address</p>
+                                <p class="card-title">@client.Email</p>
+
+                                <p></p>
                             </div>
 
                             <div class="card-body">
