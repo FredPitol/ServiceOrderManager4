@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<ClientModel>
 
- <div class="py-5" >
+<div class="py-5">
     <div class="container">
-
+        @* 14. Quando clica no botão pesquisar o input vai para name = pesquisar,  vamos receber objeto index do cliente controller ->   *@
         <div class="text-center mb-5">
             <form method="get" asp-action="Index" asp-controller="Client" class="d-flex justify-content-center">
-                <input name="pesquisar" class="form-control w-50 mx-2" style="border:1px solid black;" />
+                <input name="search" class="form-control w-50 mx-2" style="border:1px solid black;" />
                 <button type="submit" class="btn btn-primary w-10">Pesquisar</button>
             </form>
         </div>
@@ -13,46 +13,51 @@
         <div class="text-center mb-5">
             <a class="btn btn-success" asp-action="Enroll" asp-controller="Client">Cadastrar novo cliente</a> 
         </div>
-        <div class="row row-cols-1 row-cols-md-3 g-0 ">
 
-            @if (Model != null)
-            {
-                @if (Model.Count() > 0)
-                {
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Nome</th>
+                        <th>CNPJ</th>
+                        <th>Endereço</th>
+                        <th>Email</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @foreach (var client in Model)
                     {
-                        <div class="card mx-3 my-3 p-2" style="width: 12rem">
-
-                            @if(client.Logo != null)
-                            {
-                                <img src="/imagem/@client.Logo" class="card-img-top" style="width: 175px; height: 150px" />
-                            }
-                            else
-                            {
-                                <img src="..." class="card-img-top" />
-                            }
-
-                            <div class="card-body">
-                                <h5 class="card-title">@client.Name</h5>
-                                <p class="card-title">@client.Cnpj</p>
-                                <p class="card-title">@client.Address</p>
-                                <p class="card-title">@client.Email</p>
-
-                                <p></p>
-                            </div>
-
-                            <div class="card-body">
-                                <a class="btn btn-warning w-100" asp-action="Edit" asp-controller="Client" asp-route-id="@client.ID">Editar </a>
-                                <a class="btn btn-danger w-100" asp-action="Remove" asp-controller="Client" asp-route-id="@client.ID">Remover </a>
-                            </div>
-
-                        </div>
+                        <tr>
+                            <td>
+                                @if (client.Logo != null)
+                                {
+                                    <img src="/imagem/@client.Logo" alt="Logo" style="width: 75px; height: 50px" />
+                                }
+                                else
+                                {
+                                    <img src="..." alt="Logo" style="width: 75px; height: 50px" />
+                                }
+                            </td>
+                            <td>@client.Name</td>
+                            <td>@client.Cnpj</td>
+                            <td>@client.Address</td>
+                            <td>@client.Email</td>
+                            <td>
+                                <a class="btn btn-warning" asp-action="Edit" asp-controller="Client" asp-route-id="@client.ID">Editar</a>
+                                <a class="btn btn-danger" asp-action="Remove" asp-controller="Client" asp-route-id="@client.ID">Remover</a>
+                            </td>
+                        </tr>
                     }
-                }
-            }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-center">Nenhum cliente encontrado.</p>
+        }
 
-        </div>
-     
-</div>
- 
+    </div>
 </div>

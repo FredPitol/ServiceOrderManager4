@@ -15,11 +15,25 @@ namespace ServiceOrderManager.Controllers
             _clientInterface = clientInterface;
         }
 
-        public async Task<IActionResult> Index()
+        // 14.1 <- Recebendo objeto pesquisar 
+        public async Task<IActionResult> Index(string? search)
         {
             //10.3
-            var clients = await _clientInterface.GetClients();
-            return View(clients); 
+           
+            //14.2 
+            
+            if(search == null)
+            {
+                var clients = await _clientInterface.GetClients();
+                return View(clients);
+            }
+            else
+            {
+                //14.3 Filtro aplicado, adicionar a interface -> 
+                var clients = await _clientInterface.GetClientsFilter(search);
+                return View(clients);
+
+            }
         }
 
         public IActionResult Enroll()

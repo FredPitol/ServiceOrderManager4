@@ -163,5 +163,20 @@ namespace ServiceOrderManager.Services.Client
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<List<ClientModel>> GetClientsFilter(string? search)
+        {
+            try
+            {
+                // 14
+                // Adicionar task no controller caso esteja com erro
+                var clients = await _context.Clients.Where(clientFromDataBase => clientFromDataBase.Name.Contains(search)).ToListAsync();
+                return clients;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
