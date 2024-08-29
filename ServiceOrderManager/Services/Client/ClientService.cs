@@ -3,7 +3,7 @@ using ServiceOrderManager.Dto;
 using ServiceOrderManager.Models;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
-// Imports ok 
+
 
 namespace ServiceOrderManager.Services.Client
 {

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<OsModel>
+
+<div class="py-5">
+    <div class="container">
+        @* 14. Quando clica no botão pesquisar o input vai para name = pesquisar,  vamos receber objeto index do cliente controller ->   *@
+        <div class="text-center mb-5">
+            <form method="get" asp-action="Index" asp-controller="Os" class="d-flex justify-content-center">
+                <input name="search" class="form-control w-50 mx-2" style="border:1px solid black;" />
+                <button type="submit" class="btn btn-primary w-10">Pesquisar</button>
+            </form>
+        </div>
+
+        <div class="text-center mb-5">
+            <a class="btn btn-success" asp-action="Enroll" asp-controller="Os">Cadastrar nova OS </a> 
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Nome</th>
+                        <th>CNPJ</th>
+                        <th>Endereço</th>
+                        <th>Email</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var client in Model)
+                    {
+                        <tr>
+                            @* <td>
+                                @if (client.Logo != null)
+                                {
+                                    <img src="/imagem/@client.Logo" alt="Logo" style="width: 75px; height: 50px" />
+                                }
+                                else
+                                {
+                                    <img src="..." alt="Logo" style="width: 75px; height: 50px" />
+                                }
+                            </td> *@
+                        @*     <td>@client.Name</td>
+                            <td>@client.Cnpj</td>
+                            <td>@client.Address</td>
+                            <td>@client.Email</td> *@
+                            <td>
+                                <a class="btn btn-warning" asp-action="Edit" asp-controller="Client" asp-route-id="@client.ID">Editar</a>
+                                <a class="btn btn-danger" asp-action="Remove" asp-controller="Client" asp-route-id="@client.ID">Remover</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-center">Nenhuma ordem de serviço encontrada.</p>
+        }
+
+    </div>
+</div>

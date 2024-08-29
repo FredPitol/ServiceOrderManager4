@@ -14,5 +14,6 @@ namespace ServiceOrderManager.Data
 
         //5. Criando tabela do BD
         public DbSet<ClientModel> Clients { get; set; }
+        public DbSet<OsModel> Os { get; set; }
     }
 }

@@ -38,3 +38,69 @@
         </div>
     </div>
 </div> *@
+
+
+@*
+        public async Task<IActionResult> Index(string? search)
+        {
+            if (search == null)
+            {
+                var clients = await _osInterface.GetClients();
+                return View(clients);
+            }
+            else
+            {
+                //14.3 Filtro aplicado, adicionar a interface ->
+                var clients = await _osInterface.GetClientsFilter(search);
+                return View(clients);
+
+            }
+
+   
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var client = await _osInterface.GetClientById(id);
+
+            return View(client);
+        }
+
+        public async Task<IActionResult> Remove(int id)
+        {
+            var client = await _osInterface.RemoveClient(id);
+            return RedirectToAction("Index", "Client");
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> Enroll(DtoOsCreator dtoOsCreator, IFormFile photo)
+        {
+            if (ModelState.IsValid) // Info validas ?
+            {
+                var client = await _osInterface.CreateClient(dtoClientCreator, photo);
+                return RedirectToAction("Index", "Client");
+            }
+            else
+            {
+                return View(dtoClientCreator);
+            }
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(OsModel osModel, IFormFile? photo)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = await _osInterface.EditOs(osModel, photo);
+                return RedirectToAction("Index", "Os");
+            }
+            else
+            {
+                return View(osModel);
+            }
+
+        }
+
+*@
