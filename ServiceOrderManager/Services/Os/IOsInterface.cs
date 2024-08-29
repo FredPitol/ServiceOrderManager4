@@ -5,7 +5,7 @@ namespace ServiceOrderManager.Services.Os
 {
     public interface IOsInterface
     {
-        Task<OsModel> CreateOs(DtoOsCreator dtoOsCreator, IFormFile photo);
+        Task<OsModel> CreateOs(DtoOsCreator dtoOsCreator);
         Task<List<OsModel>> GetOrders();
         Task<OsModel> GetOsById(int id); 
         Task<OsModel> EditOs(OsModel os, IFormFile? photo);

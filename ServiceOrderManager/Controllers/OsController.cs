@@ -53,11 +53,11 @@ namespace ServiceOrderManager.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Enroll(DtoOsCreator dtoOsCreator, IFormFile photo)
+        public async Task<IActionResult> Enroll(DtoOsCreator dtoOsCreator)
         {
             if (ModelState.IsValid) // Info validas ?
             {
-                var client = await _osInterface.CreateOs(dtoOsCreator, photo); //Passar objeto?
+                var client = await _osInterface.CreateOs(dtoOsCreator); //Passar objeto?
                 return RedirectToAction("Index", "Client");
             }
             else

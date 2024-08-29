@@ -44,12 +44,17 @@ namespace ServiceOrderManager.Services.Os
 
         }
 
-        public async Task<OsModel> CreateOs(DtoOsCreator dtoOsCreator, IFormFile photo)
+        public async Task<OsModel> CreateOs(DtoOsCreator dtoOsCreator)
         {
             try
             {
-                var imagePathName = CreateFilePath(photo);
-
+                var clientTest = new ClientModel
+                {
+                    Name = "Teste",
+                    Email = "Teste",
+                    Address = dtoClientCreator.Address,
+                    Cnpj = dtoClientCreator.Cnpj,
+                }
                 var os = new OsModel
                 {
                     Name = dtoOsCreator.Name,                 
@@ -58,7 +63,7 @@ namespace ServiceOrderManager.Services.Os
                     ServiceProviderRole = dtoOsCreator.ServiceProviderRole,
                     ExecutionDate = dtoOsCreator.ExecutionDate,
                     ServiceCost = dtoOsCreator.ServiceCost,
-                    ClientID = dtoOsCreator.ClientID,
+                    //ClientID = dtoOsCreator.ClientID,
                 };
 
               
