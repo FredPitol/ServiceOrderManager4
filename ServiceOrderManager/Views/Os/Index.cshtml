@@ -11,7 +11,7 @@
         </div>
 
         <div class="text-center mb-5">
-            <a class="btn btn-success" asp-action="Enroll" asp-controller="Os">Cadastrar nova OS </a> 
+            <a class="btn btn-success" asp-action="Enroll" asp-controller="Os"> Cadastrar nova OS </a> 
         </div>
 
         @if (Model != null && Model.Any())
@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var client in Model)
+                    @foreach (var os in Model)
                     {
                         <tr>
                             @* <td>
@@ -46,8 +46,8 @@
                             <td>@client.Address</td>
                             <td>@client.Email</td> *@
                             <td>
-                                <a class="btn btn-warning" asp-action="Edit" asp-controller="Client" asp-route-id="@client.ID">Editar</a>
-                                <a class="btn btn-danger" asp-action="Remove" asp-controller="Client" asp-route-id="@client.ID">Remover</a>
+                                <a class="btn btn-warning" asp-action="Edit" asp-controller="Os" asp-route-id="@os.ID">Editar</a>
+                                <a class="btn btn-danger" asp-action="Remove" asp-controller="Os" asp-route-id="@os.ID">Remover</a>
                             </td>
                         </tr>
                     }

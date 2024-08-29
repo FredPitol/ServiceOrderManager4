@@ -8,14 +8,12 @@ namespace ServiceOrderManager.Controllers
     public class ClientController : Controller
     {
         private readonly IClientInterface _clientInterface;
-
-        //9.5 
+    
         public ClientController(IClientInterface clientInterface)
         {
             _clientInterface = clientInterface;
         }
 
-        // 14.1 <- Recebendo objeto pesquisar 
         public async Task<IActionResult> Index(string? search)
         {
             //10.3
@@ -36,12 +34,12 @@ namespace ServiceOrderManager.Controllers
             }
         }
 
+ 
         public IActionResult Enroll()
         {
             return View();
         }
 
-        // 11.1 
         public async Task<IActionResult> Edit(int id)
         {
             var client = await _clientInterface.GetClientById(id);
@@ -49,17 +47,13 @@ namespace ServiceOrderManager.Controllers
             return View(client);
         }
 
-
-        //12. 
         public async Task<IActionResult> Remove(int id)
         {
             var client = await _clientInterface.RemoveClient(id);
             return RedirectToAction("Index", "Client");
         }
-
-        
+ 
         [HttpPost]
-
         public async Task<IActionResult> Enroll(DtoClientCreator dtoClientCreator, IFormFile photo)
         {
             if (ModelState.IsValid) // Info validas ?
